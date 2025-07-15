@@ -1,0 +1,59 @@
+🔍 1. Imagens e Containers Antigos
+Toda vez que você constrói uma imagem ou roda um container, o Docker armazena esses dados.
+
+Mesmo containers parados e imagens não utilizadas continuam ocupando espaço.
+
+📦 Para ver o que está ocupando espaço:
+bash
+docker system df
+
+🧹 2. Como Limpar Espaço no Docker
+a) Remover containers parados
+bash
+docker container prune
+
+b) Remover imagens não utilizadas
+bash
+docker image prune
+
+c) Remover volumes não utilizados
+bash
+docker volume prune
+
+d) Remover tudo que não está sendo usado
+⚠️ Cuidado: remove tudo que não está em uso, inclusive redes, volumes e imagens.
+
+bash
+docker system prune -a
+
+📁 3. Volumes e Containers Persistentes
+Volumes são salvos em:
+Linux/WSL2/macOS → /var/lib/docker/volumes/
+Windows com WSL2 → \\wsl$\docker-desktop-data\version-pack-data\community\docker\volumes
+Se você usa muitos volumes e nunca os limpa, o espaço pode crescer rapidamente.
+
+🧊 4. Build Cache e Layers
+Toda vez que você faz docker build, o Docker guarda os layers antigos como cache.
+
+Para limpar o cache do build:
+
+bash
+docker builder prune
+
+🛠️ 5. Limpeza Completa Manual (usando scripts)
+bash
+# Ver quanto está usando
+docker system df
+
+# Limpeza geral (cuidado: apaga containers e imagens)
+docker system prune -a --volumes
+
+💡 Dicas para evitar esse problema:
+Use .dockerignore para evitar copiar arquivos desnecessários para o build.
+
+Use imagens pequenas como python:slim, alpine, etc.
+
+Faça builds limpos com menos camadas no Dockerfile.
+
+Rode limpezas regularmente (uma vez por semana, por exemplo).
+

@@ -1,0 +1,54 @@
+👉 Se estiver usando Git Bash ou WSL:
+Use:
+
+bash
+source venv/Scripts/activate
+✅ Aqui usamos barra normal (/) e o comando source.
+
+👉 Se estiver usando o terminal padrão do Windows (CMD):
+Use:
+
+cmd
+venv\Scripts\activate.bat
+👉 Se estiver usando o PowerShell:
+Use:
+
+powershell
+venv\Scripts\Activate.ps1
+⚠️ Se der erro de permissão, rode este comando primeiro no PowerShell (uma única vez):
+
+powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+🧪 Verifique se ativou corretamente
+Após ativar, o terminal deve mostrar algo como:
+
+scss
+(venv) C:\SeuProjeto\backend>
+✅ Depois disso:
+Instale os pacotes:
+
+bash
+pip install -r requirements.txt
+No VS Code: Ctrl+Shift+P → Python: Select Interpreter → escolha o venv que você acabou de ativar.
+
+----------------------------------------------
+
+Teste o Python e a importação do pytesseract
+No terminal ou no próprio VS Code, execute:
+bash
+python
+
+E no prompt do Python, digite:
+python
+import pytesseract
+print(pytesseract.get_tesseract_version())
+
+Para sair digite:
+python
+exit()
+
+Ou pressione CTRL+z
+
+Para atualizar a versão do python digite:
+bash
+python -m pip install --upgrade pip

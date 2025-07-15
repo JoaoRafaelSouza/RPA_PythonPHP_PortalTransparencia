@@ -1,0 +1,61 @@
+name: CI/CD - RPA Python + PHP + Nginx
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: rpa
+          MYSQL_USER: user
+          MYSQL_PASSWORD: pass
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependências Python
+        run: |
+          cd backend
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Testar sintaxe PHP
+        run: |
+          sudo apt-get update
+          sudo apt-get install php-cli
+          find frontend -name '*.php' -exec php -l {} \;
+
+      - name: Build Docker containers
+        run: docker-compose up -d --build
+
+      - name: Verificar containers
+        run: docker ps -a
+
+      - name: Testar endpoint FastAPI
+        run: |
+          sleep 10
+          curl -X POST http://localhost:8000/api/buscar \
+            -H "Content-Type: application/json" \
+            -d '{"cpf":"12345678901"}'

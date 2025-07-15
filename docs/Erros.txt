@@ -1,0 +1,13 @@
+Erro do launch.json
+Server[pid=1] is already being debbugged
+
+
+-----------------------------------------------------------------
+Por que isso acontece?
+Sem a barra final no proxy_pass, o Nginx anexa o caminho da requisição após o endereço passado.
+
+Com a barra final no proxy_pass, ele substitui o prefixo definido na location pelo caminho passado.
+
+Isso é detalhado na documentação oficial do Nginx: https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass (veja a parte “If proxy_pass is specified without a URI”).
+
+Se corrigir isso, seu Nginx deverá encaminhar as requisições /api/* para o backend correto, e não vai mais dar 502 Bad Gateway ou erro 404 na API.

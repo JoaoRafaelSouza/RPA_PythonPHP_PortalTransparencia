@@ -1,0 +1,12 @@
+✅ Como usar:
+1 - Salvar como: limpeza_docker_interativo_com_espaco.sh
+
+2 - Tornar executável:
+
+bash
+chmod +x limpeza_docker_interativo_com_espaco.sh
+
+3 - Executar:
+
+bash
+./limpeza_docker_interativo_com_espaco.sh

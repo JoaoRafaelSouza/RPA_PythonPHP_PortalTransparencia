@@ -1,0 +1,154 @@
+RPA_PortalTransparencia_Simples/
+├── .github/
+│   └── workflows/
+│   │   └── ci-cd.yml
+│
+├── .vscode/
+│   └── launch.json
+│
+├── backend/
+│   ├── app/
+│   │   ├── controllers/
+│   │   │   ├── __init__.py
+│   │   │   └── buscar_controller.py
+│   │   │
+│   │   ├── models/
+│   │   │   ├── __init__.py
+│   │   │   └── consulta_model.py
+│   │   │
+│   │   └── main.py
+│   │
+│   ├── chromedriver/
+│   │   ├── chrome-win64.zip
+│   │   └── chromedriver-linux64.zip
+│   │
+│   ├── venv/
+│   │   ├── Include/
+│   │   ├── Lib/
+│   │   │   └── site-packages/ 
+│   │   │   │   ├── __pycache__/
+│   │   │   │   ├── _distutils_hack/
+│   │   │   │   ├── annotated_types/
+│   │   │   │   ├── annotated_types-0.7.0.dist-info/
+│   │   │   │   ├── anyio/
+│   │   │   │   ├── anyio-4.9.0.dist-info/
+│   │   │   │   ├── attr/
+│   │   │   │   ├── attrs/
+│   │   │   │   ├── attrs-25.3.0.dist-info/
+│   │   │   │   ├── certifi/
+│   │   │   │   ├── certifi-2025.7.9.dist-info/
+│   │   │   │   ├── cffi/
+│   │   │   │   ├── cffi-1.17.1.dist-info/
+│   │   │   │   ├── click/
+│   │   │   │   ├── click-8.1.8.dist-info/
+│   │   │   │   ├── colorama/
+│   │   │   │   ├── colorama-0.4.6.dist-info/
+│   │   │   │   ├── debugpy/
+│   │   │   │   ├── debugpy-1.8.14.dist-info/
+│   │   │   │   ├── dotenv/
+│   │   │   │   ├── exceptiongroup/
+│   │   │   │   ├── exceptiongroup-1.3.0.dist-info/
+│   │   │   │   ├── fastapi/
+│   │   │   │   ├── fastapi-0.116.1.dist-info/
+│   │   │   │   ├── h11/
+│   │   │   │   ├── h11-0.16.0.dist-info/
+│   │   │   │   ├── idna/
+│   │   │   │   ├── idna-3.10.dist-info/
+│   │   │   │   ├── outcome/
+│   │   │   │   ├── outcome-1.3.0.post0.dist-info/
+│   │   │   │   ├── packaging/
+│   │   │   │   ├── packaging-25.0.dist-info/
+│   │   │   │   ├── PIL/
+│   │   │   │   ├── pillow-11.3.0.dist-info/
+│   │   │   │   ├── pip/
+│   │   │   │   ├── pip-25.1.1.dist-info/
+│   │   │   │   ├── pkg_resources/
+│   │   │   │   ├── pycparser/
+│   │   │   │   ├── pycparser-2.22.dist-info/
+│   │   │   │   ├── pydantic/
+│   │   │   │   ├── pydantic_core/
+│   │   │   │   ├── pydantic_core-2.33.2.dist-info/
+│   │   │   │   ├── pydantic-2.11.7.dist-info/
+│   │   │   │   ├── PySocks-1.7.1.dist-info/
+│   │   │   │   ├── pytesseract/
+│   │   │   │   ├── pytesseract-0.3.13.dist-info/
+│   │   │   │   ├── python_dotenv-1.1.1.dist-info/
+│   │   │   │   ├── selenium/
+│   │   │   │   ├── selenium-4.34.2.dist-info/
+│   │   │   │   ├── setuptools/
+│   │   │   │   ├── setuptools-57.4.0.dist-info/
+│   │   │   │   ├── sniffio/
+│   │   │   │   ├── sniffio-1.3.1.dist-info/
+│   │   │   │   ├── sortedcontainers/
+│   │   │   │   ├── sortedcontainers-2.4.0.dist-info/
+│   │   │   │   ├── starlette/
+│   │   │   │   ├── starlette-0.47.1.dist-info/
+│   │   │   │   ├── trio/
+│   │   │   │   ├── trio_websocket/
+│   │   │   │   ├── trio_websocket-0.12.2.dist-info/
+│   │   │   │   ├── trio-0.30.0.dist-info/
+│   │   │   │   ├── typing_extensions-4.14.1.dist-info/
+│   │   │   │   ├── typing_inspection/
+│   │   │   │   ├── typing_inspection-0.4.1.dist-info/
+│   │   │   │   ├── urllib3/
+│   │   │   │   ├── urllib3-2.5.0.dist-info/
+│   │   │   │   ├── uvicorn/
+│   │   │   │   ├── uvicorn-0.35.0.dist-info/
+│   │   │   │   ├── websocket/
+│   │   │   │   ├── websocket_client-1.8.0.dist-info/
+│   │   │   │   ├── wsproto/
+│   │   │   │   ├── wsproto-1.2.0.dist-info/
+│   │   │   │   ├── _cffi_backend.cp39-win_amd64.pyd
+│   │   │   │   ├── distutils-precedence.pth
+│   │   │   │   ├── socks.py
+│   │   │   │   ├── sockshandler.py
+│   │   │   │   └── typing_extensions.py 
+│   │   │
+│   │   ├── Script/
+│   │   │   ├── activate 
+│   │   │   ├── activate.bat 
+│   │   │   ├── Activate.ps1 
+│   │   │   ├── deactivate.bat 
+│   │   │   ├── debugpy-adapter.exe 
+│   │   │   ├── debugpy.exe 
+│   │   │   ├── dotenv.exe 
+│   │   │   ├── fastapi.exe 
+│   │   │   ├── pip.exe 
+│   │   │   ├── pip3.9.exe 
+│   │   │   ├── pip3.exe 
+│   │   │   ├── pytesseract.exe 
+│   │   │   ├── python.exe 
+│   │   │   ├── pythonw.exe 
+│   │   │   ├── uvicorn.exe 
+│   │   │   └── wsdump.exe
+│   │   └── pyvenv.cfg
+│   │
+│   ├── Dockerfile
+│   └── requirements.txt
+│
+├── docs/
+│   ├── Comandos_Basicos_Python.txt
+│   ├── Como_Usar_O_Docker.txt
+│   ├── Erros.txt
+│   └── Estrutura.txt
+│
+├── frontend/
+│   ├── Dockerfile
+│   └── index.php
+│
+├── infra/
+│   ├── .env
+│   ├── .env.local
+│   └── docker-compose.yml
+│
+├── nginx/
+│   └── nginx.conf
+│
+├── .env
+├── .gitignore
+├── Como_Usar_A_Limpeza.txt
+├── limpeza_docker_interativo_com_espaco.sh
+├── limpeza_docker_interativo.sh
+├── limpeza_docker.bat
+├── limpeza_docker.sh
+└── README.md

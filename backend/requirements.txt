@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+selenium
+pytesseract
+debugpy
+python-dotenv
+pillow
+mysql-connector-python==9.3.0
