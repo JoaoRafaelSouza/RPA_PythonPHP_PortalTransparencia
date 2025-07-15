@@ -44,18 +44,30 @@ jobs:
       - name: Testar sintaxe PHP
         run: |
           sudo apt-get update
-          sudo apt-get install php-cli
+          sudo apt-get install -y php-cli
           find frontend -name '*.php' -exec php -l {} \;
 
-      - name: Build Docker containers
-        run: docker-compose up -d --build
+      - name: Rodar Docker Compose (V2 embutido no Docker)
+        run: |
+          docker compose up -d --build
 
       - name: Verificar containers
-        run: docker ps -a
+        run: docker compose ps
 
       - name: Testar endpoint FastAPI
         run: |
-          sleep 10
-          curl -X POST http://localhost:8000/api/buscar \
+          sleep 15
+          curl -X POST http://localhost/api/buscar \
             -H "Content-Type: application/json" \
             -d '{"cpf":"12345678901"}'
+
+      - name: Rodar testes com Pytest
+        run: |
+          cd backend
+          pytest tests/
+      
+      - name: Rodar testes com cobertura
+        run: |
+          cd backend
+          coverage run -m pytest
+          coverage report

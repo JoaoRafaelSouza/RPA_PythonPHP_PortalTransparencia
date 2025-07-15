@@ -6,3 +6,7 @@ debugpy
 python-dotenv
 pillow
 mysql-connector-python==9.3.0
+pytest
+pytest-asyncio
+httpx
+coverage
