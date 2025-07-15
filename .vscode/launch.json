@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Python: Docker Attach",
+      "name": "Python: Attach to Docker Container",
       "type": "python",
       "request": "attach",
       "connect": {
@@ -11,11 +11,10 @@
       },
       "pathMappings": [
         {
-          "localRoot": "${workspaceFolder}/backend/app",
+          "localRoot": "${workspaceFolder}/app",
           "remoteRoot": "/app"
         }
-      ],
-      "justMyCode": false
+      ]
     }
   ]
 }

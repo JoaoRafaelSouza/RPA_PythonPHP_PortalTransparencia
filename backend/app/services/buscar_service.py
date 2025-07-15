@@ -1,3 +1,4 @@
+from .scraper_portal import PortalTransparenciaScraper
 from models.consulta_model import ConsultaRequest
 
 async def buscar_dados(body: ConsultaRequest):
@@ -8,3 +9,7 @@ async def buscar_dados(body: ConsultaRequest):
     elif body.nome:
         return {"resultado": f"Consulta Nome {body.nome}"}
     return {"erro": "Nenhum dado informado"}
+
+    scraper = PortalTransparenciaScraper()
+    resultado = scraper.buscar_pessoa(termo_busca)
+    return resultado

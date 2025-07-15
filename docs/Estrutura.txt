@@ -9,12 +9,22 @@ RPA_PortalTransparencia_Simples/
 ├── backend/
 │   ├── app/
 │   │   ├── controllers/
+│   │   │   ├── __pycache__/
 │   │   │   ├── __init__.py
 │   │   │   └── buscar_controller.py
 │   │   │
 │   │   ├── models/
+│   │   │   ├── __pycache__/
 │   │   │   ├── __init__.py
 │   │   │   └── consulta_model.py
+│   │   │
+│   │   ├── services/
+│   │   │   ├── __pycache__/
+│   │   │   ├── __init__.py
+│   │   │   └── buscar_service.py
+│   │   │
+│   │   ├── tests/
+│   │   │   └── test_api.py
 │   │   │
 │   │   └── main.py
 │   │

@@ -13,10 +13,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Inclui o controller com prefixo /api
 app.include_router(buscar_controller.router, prefix="/api")
 
-# Rota de verificação
 @app.get("/")
 def root():
     return {"message": "API funcionando!"}

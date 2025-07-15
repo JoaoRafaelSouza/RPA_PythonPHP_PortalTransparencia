@@ -65,7 +65,7 @@
                 payload.nome = busca;
             }
 
-            fetch("/api/buscar", {
+            fetch("http://localhost:8000/api/buscar", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
