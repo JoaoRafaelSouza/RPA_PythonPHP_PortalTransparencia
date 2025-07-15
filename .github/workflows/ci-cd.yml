@@ -49,7 +49,7 @@ jobs:
 
       - name: Rodar Docker Compose (V2 embutido no Docker)
         run: |
-          docker compose up -d --build
+          docker compose -f infra/docker-compose.yml up -d --build
 
       - name: Verificar containers
         run: docker compose ps
