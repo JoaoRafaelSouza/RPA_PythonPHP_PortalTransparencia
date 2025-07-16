@@ -7,30 +7,61 @@ RPA_PortalTransparencia_Simples/
 │   └── launch.json
 │
 ├── backend/
+│   ├── alembic/
+│   │   │   ├── version/
+│   │   │   ├── env.py
+│   │   │   ├── README
+│   │   │   └── script.py.mako
+│   │   │
 │   ├── app/
+│   │   ├── __pycache__/
+│   │   │   ├── db.cpython-39.pyc
+│   │   │   ├── db.cpython-311.pyc
+│   │   │   └── main.cpython-311.pyc
+│   │   │
+│   │   ├── core/
+│   │   │   └── config.py
+│   │   │
 │   │   ├── controllers/
 │   │   │   ├── __pycache__/
 │   │   │   ├── __init__.py
 │   │   │   └── buscar_controller.py
 │   │   │
+│   │   ├── daos/
+│   │   │   └── buscar_dao.py
+│   │   │
+│   │   ├── migrations/
+│   │   │   └── create_tables.py
+│   │   │
 │   │   ├── models/
 │   │   │   ├── __pycache__/
 │   │   │   ├── __init__.py
-│   │   │   └── consulta_model.py
+│   │   │   ├── beneficio_model.py
+│   │   │   ├── consulta_model.py
+│   │   │   └── pessoa_model.py
 │   │   │
 │   │   ├── services/
 │   │   │   ├── __pycache__/
 │   │   │   ├── __init__.py
-│   │   │   └── buscar_service.py
+│   │   │   ├── buscar_service.py
+│   │   │   └── scraper_portal.py
 │   │   │
 │   │   ├── tests/
 │   │   │   └── test_api.py
+│   │   │
+│   │   ├── utils/
+│   │   │   ├── __pycache__/
+│   │   │   ├── chrome_driver_opcoes.py
+    │   │   └── resultados.py
 │   │   │
 │   │   └── main.py
 │   │
 │   ├── chromedriver/
 │   │   ├── chrome-win64.zip
-│   │   └── chromedriver-linux64.zip
+│   │   └── chromedriver-linux64.zi
+│   │
+│   ├── logs/
+│   │   └── app.log
 │   │
 │   ├── venv/
 │   │   ├── Include/
@@ -156,6 +187,7 @@ RPA_PortalTransparencia_Simples/
 │
 ├── .env
 ├── .gitignore
+├── alembic.ini
 ├── Como_Usar_A_Limpeza.txt
 ├── limpeza_docker_interativo_com_espaco.sh
 ├── limpeza_docker_interativo.sh

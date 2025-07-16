@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Projetos\Python\RPA_PortalTransparencia_Simples\backend\venv"
+VIRTUAL_ENV="C:\Projetos\Python\RPA_PythonPHP_PortalTransparencia\backend\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Projetos\Python\RPA_PortalTransparencia_Simples\backend\venv
+set VIRTUAL_ENV=C:\Projetos\Python\RPA_PythonPHP_PortalTransparencia\backend\venv
 
 if not defined PROMPT set PROMPT=$P$G
 
