@@ -1,13 +1,11 @@
-import base64
 import sys
 import logging
-import shutil
+import asyncio
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-
-from utils.chrome_driver_opcoes import criar_driver, fechar_driver
+from utils.chrome_driver_opcoes import criar_driver, fechar_driver, imagem_tela
 
 logger = logging.getLogger("scraper")
 logger.setLevel(logging.DEBUG)
@@ -35,28 +33,44 @@ class PortalTransparenciaScraper:
         try:
             logger.info(f"Iniciando busca por: {termo_busca}")
             self.driver.get("https://portaldatransparencia.gov.br/pessoa/visao-geral")
-            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//button[contains(text(),"Acessar busca")]'))).click()
+            imagem_tela(self.driver, "pag")
 
-            input_busca = self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'input[placeholder*="Nome, Nis ou CPF"]')))
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="accept-all-btn"]'))).click()
+            imagem_tela(self.driver, "pag")
+
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="button-consulta-pessoa-fisica"]'))).click()
+            imagem_tela(self.driver, "pag")
+
+            input_busca = self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="termo"]')))
+            imagem_tela(self.driver, "pag")
             input_busca.clear()
             input_busca.send_keys(termo_busca)
+            imagem_tela(self.driver, "pag")
 
-            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//button[contains(text(),"REFINE A BUSCA")]'))).click()
-            checkbox = self.wait.until(EC.element_to_be_clickable((By.XPATH, '//label[contains(text(),"BENEFICIÁRIO DE PROGRAMA SOCIAL")]/preceding-sibling::input[@type="checkbox"]')))
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="form-superior"]/section[1]/div/div/fieldset/div/button'))).click()
+            imagem_tela(self.driver, "pag")
+            
+            checkbox = self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="accordion1"]/div[1]/button')))
+            imagem_tela(self.driver, "pag")
             if not checkbox.is_selected():
                 checkbox.click()
 
-            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//button[contains(text(),"Consultar")]'))).click()
-            self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'tbody')))
-            linhas = self.driver.find_elements(By.CSS_SELECTOR, 'tbody tr')[:10]
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="box-busca-refinada"]/div[1]/div[2]/div'))).click()
+            imagem_tela(self.driver, "pag")
+            
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="btnConsultarPF"]')))
+            imagem_tela(self.driver, "pag")
+            
+            resultado_beneficios = self.driver.find_elements(By.XPATH, '//*[@id="resultados"]')[:10]
+            imagem_tela(self.driver, "pag")
 
-            if not linhas:
+            if not resultado_beneficios:
                 logger.warning(f"Nenhum resultado encontrado para '{termo_busca}'")
                 resultado_final["mensagem_erro"] = f"Nenhum resultado encontrado para '{termo_busca}'."
                 return resultado_final
 
-            logger.info(f"Encontrados {len(linhas)} resultados")
-            for idx, linha in enumerate(linhas):
+            logger.info(f"Encontrados {len(resultado_beneficios)} resultados")
+            for idx, linha in enumerate(resultado_beneficios):
                 linha.click()
                 self.wait.until(EC.presence_of_element_located((By.XPATH, '//h1[contains(text(),"Panorama da relação")]')))
 
