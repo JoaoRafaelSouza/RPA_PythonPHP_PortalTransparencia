@@ -4,7 +4,7 @@ services:
     container_name: mysql
     restart: always
     env_file:
-      - .env
+      - ./infra/.env
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -19,18 +19,18 @@ services:
 
   backend:
     build:
-      context: ../backend
+      context: ./backend
     container_name: backend
     restart: on-failure
     env_file:
-      - .env
+      - ./infra/.env
     environment:
       PYDEVD_DISABLE_FILE_VALIDATION: "1"
       PYTHONUNBUFFERED: 1
       DEBUG: "True"
       DOCKER_ENV: 1
     volumes:
-      - ../backend/app:/app
+      - ./backend:/app
     expose:
       - "8000"
       - "5678"
@@ -50,7 +50,7 @@ services:
     ports:
       - "9000:80"
     volumes:
-      - ../frontend:/var/www/html
+      - ./frontend:/var/www/html
     depends_on:
       - mysql
     networks:
@@ -62,8 +62,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ../nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ../frontend:/var/www/html
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./frontend:/var/www/html
     depends_on:
       - backend
       - frontend

@@ -16,8 +16,8 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: rpa
-          MYSQL_USER: user
-          MYSQL_PASSWORD: pass
+          MYSQL_USER: admin
+          MYSQL_PASSWORD: 123
         ports:
           - 3306:3306
         options: >-
@@ -48,8 +48,7 @@ jobs:
           find frontend -name '*.php' -exec php -l {} \;
 
       - name: Rodar Docker Compose (V2 embutido no Docker)
-        run: |
-          docker compose -f infra/docker-compose.yml up -d --build
+        run: docker compose up -d --build
 
       - name: Verificar containers
         run: docker compose ps

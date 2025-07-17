@@ -31,13 +31,16 @@ class PortalTransparenciaScraper:
         }
 
         try:
+            # Aqui inicia 
             logger.info(f"Iniciando busca por: {termo_busca}")
             self.driver.get("https://portaldatransparencia.gov.br/pessoa/visao-geral")
             imagem_tela(self.driver, "pag")
 
+            # Faz o primeiro clique, aceita os cookies
             self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="accept-all-btn"]'))).click()
             imagem_tela(self.driver, "pag")
 
+            # 
             self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="button-consulta-pessoa-fisica"]'))).click()
             imagem_tela(self.driver, "pag")
 
