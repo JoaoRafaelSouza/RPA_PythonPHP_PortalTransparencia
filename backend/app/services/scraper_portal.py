@@ -54,7 +54,6 @@ class PortalTransparenciaScraper:
             imagem_tela(self.driver, "pag")
             
             checkbox = self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="accordion1"]/div[1]/button')))
-            imagem_tela(self.driver, "pag")
             if not checkbox.is_selected():
                 checkbox.click()
 
