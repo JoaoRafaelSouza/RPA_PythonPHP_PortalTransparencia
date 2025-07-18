@@ -36,23 +36,28 @@ class PortalTransparenciaScraper:
             self.driver.get("https://portaldatransparencia.gov.br/pessoa/visao-geral")
             imagem_tela(self.driver, "pag")
 
-            # Faz o primeiro clique, aceita os cookies
+            # Faz o primeiro acesso ao portal
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="button-consulta-pessoa-fisica"]'))).click()
+            imagem_tela(self.driver, "pag")
+            
+            # Faz o clique, aceita os cookies
             self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="accept-all-btn"]'))).click()
             imagem_tela(self.driver, "pag")
 
-            # 
-            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="button-consulta-pessoa-fisica"]'))).click()
-            imagem_tela(self.driver, "pag")
-
+            # Aqui ele habilita o cursor para fazer input como nome, cpf ou nis
             input_busca = self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="termo"]')))
             imagem_tela(self.driver, "pag")
             input_busca.clear()
+            
+            #Aqui ele coloca o valor do input
             input_busca.send_keys(termo_busca)
             imagem_tela(self.driver, "pag")
 
+            # Aqui ele abre o checkbox da tela
             self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="form-superior"]/section[1]/div/div/fieldset/div/button'))).click()
             imagem_tela(self.driver, "pag")
             
+            # Aqui ele faz o clique para a pesquisa.
             checkbox = self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="accordion1"]/div[1]/button')))
             if not checkbox.is_selected():
                 checkbox.click()

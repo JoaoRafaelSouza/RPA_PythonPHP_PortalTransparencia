@@ -48,7 +48,8 @@ jobs:
           find frontend -name '*.php' -exec php -l {} \;
 
       - name: Rodar Docker Compose (V2 embutido no Docker)
-        run: docker compose up -d --build
+        run: |
+          docker compose -f infra/docker-compose.yml up -d --build
 
       - name: Verificar containers
         run: docker compose ps
