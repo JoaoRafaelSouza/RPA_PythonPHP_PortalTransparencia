@@ -77,7 +77,7 @@ class PortalTransparenciaScraper:
             qtde_resultado = self.driver.find_element(By.ID, 'countResultados')
             imagem_tela(self.driver, "pag")
             
-            if(int(qtde_resultado.text) > 0):
+            if(int(qtde_resultado.text) == 0):
                 logger.warning(f"Nenhum resultado encontrado para '{termo_busca}'")
                 resultado_final["mensagem_erro"] = f"Nenhum resultado encontrado para '{termo_busca}'."
             
@@ -124,6 +124,7 @@ class PortalTransparenciaScraper:
 
     def _coletar_beneficios(self):
         beneficios = []
+        beneficio = []
         try:
             # rows = self.driver.find_elements(By.XPATH, '//*[@id="accordion1"]/div[1]/button')
             # self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="btnConsultarPF"]')))
@@ -135,12 +136,11 @@ class PortalTransparenciaScraper:
             rows = self.driver.find_elements(By.CSS_SELECTOR, '.br-button.secondary.mt-3')
             # imagem_tela(self.driver, "pag")
             
+            
             for row in rows:
                 try:
                     btn = row.find_element(By.ID, 'btnDetalharAuxilioBrasil')
                     btn.click()
-                    
-                    # //*[@id="accordion1"]/div[1]/button
                     
                     trs = self.driver.find_elements(By.CSS_SELECTOR, 'tbody tr td')
                     i = 0
@@ -153,9 +153,11 @@ class PortalTransparenciaScraper:
                             for unidade_td in varios_tds:
                                 try:
                                     td = unidade_td[b].find_element(By.XPATH, '//*[@id="tabelaDetalheValoresSacados"]/tbody/tr[{a}]/td[{b}]')
+                                    beneficio.append(td)
                                     b =+ 1
                                 except Exception as e:
                                     logger.warning(f"Erro coletando benefícios: {e}")
+                            beneficios = {'auxilioBrasil': [beneficio]}
                             i =+ 1
                             a =+ 1
                         except Exception as e:
