@@ -1,0 +1,56 @@
+✅ Etapas básicas para usar Alembic com SQLAlchemy
+1. Instalar Alembic
+bash
+Copiar
+Editar
+pip install alembic
+2. Inicializar o Alembic no projeto
+Dentro do seu projeto, execute:
+
+bash
+Copiar
+Editar
+alembic init alembic
+Isso cria uma pasta alembic/ com arquivos de configuração e um arquivo principal alembic.ini.
+
+3. Configurar a URL do banco de dados
+Edite o arquivo alembic.ini:
+
+ini
+Copiar
+Editar
+sqlalchemy.url = sqlite:///meubanco.db
+# Ou para PostgreSQL, por exemplo:
+# sqlalchemy.url = postgresql://usuario:senha@localhost/nome_banco
+Ou você pode definir isso programaticamente no env.py da pasta alembic/.
+
+4. Integrar com seus modelos SQLAlchemy
+No alembic/env.py, localize o trecho:
+
+python
+Copiar
+Editar
+# add your model's MetaData object here
+target_metadata = None
+E substitua por algo assim:
+
+python
+Copiar
+Editar
+from meu_app.models import Base  # onde estão seus modelos SQLAlchemy
+target_metadata = Base.metadata
+5. Criar uma migração
+Com os modelos definidos e target_metadata configurado:
+
+bash
+Copiar
+Editar
+alembic revision --autogenerate -m "Criação da tabela de usuários"
+Isso cria um script de migração em alembic/versions/ com comandos op.create_table(...), op.add_column(...), etc.
+
+6. Aplicar a migração (migrar o banco)
+bash
+Copiar
+Editar
+alembic upgrade head
+head significa a versão mais recente.

@@ -1,6 +1,6 @@
 import sys
 import logging
-import asyncio
+import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -38,64 +38,83 @@ class PortalTransparenciaScraper:
 
             # Faz o primeiro acesso ao portal
             self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="button-consulta-pessoa-fisica"]'))).click()
+            time.sleep(10)
             imagem_tela(self.driver, "pag")
             
             # Faz o clique, aceita os cookies
             self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="accept-all-btn"]'))).click()
+            time.sleep(2)
             imagem_tela(self.driver, "pag")
 
             # Aqui ele habilita o cursor para fazer input como nome, cpf ou nis
             input_busca = self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="termo"]')))
+            time.sleep(2)
             imagem_tela(self.driver, "pag")
             input_busca.clear()
             
             #Aqui ele coloca o valor do input
             input_busca.send_keys(termo_busca)
+            time.sleep(2)
             imagem_tela(self.driver, "pag")
 
             # Aqui ele abre o checkbox da tela
             self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="form-superior"]/section[1]/div/div/fieldset/div/button'))).click()
+            time.sleep(2)
             imagem_tela(self.driver, "pag")
             
-            # Aqui ele faz o clique para a pesquisa.
-            checkbox = self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="accordion1"]/div[1]/button')))
+            # Aqui ele faz o clique para abrir o tipo de pesquisa.
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="accordion1"]/div[1]/button'))).click()
+            time.sleep(2)
+            imagem_tela(self.driver, "pag")
+            
+            # Aqui seleciona a opção Beneficiário de Programa Social
+            checkbox = self.driver.find_element(By.XPATH, '//*[@id="box-busca-refinada"]/div[1]/div[2]/div/label')
             if not checkbox.is_selected():
                 checkbox.click()
-                
-            # //*[@id="beneficiarioProgramaSocial"]
-            # //*[@id="accordion1"]/div[1]/button
-            # //*[@id="box-busca-refinada"]/div[1]/div[2]/div
-            # //*[@id="btnConsultarPF"]
+            time.sleep(2)
+            imagem_tela(self.driver, "pag")
 
             # Aqui ele confirma a pesquisa
-            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="box-busca-refinada"]/div[1]/div[2]/div'))).click()
-            imagem_tela(self.driver, "pag")
-            
-            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="btnConsultarPF"]')))
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="btnConsultarPF"]'))).click()
+            time.sleep(5)
             imagem_tela(self.driver, "pag")
             
             qtde_resultado = self.driver.find_element(By.ID, 'countResultados')
+            time.sleep(10)
             imagem_tela(self.driver, "pag")
             
             if(int(qtde_resultado.text) == 0):
                 logger.warning(f"Nenhum resultado encontrado para '{termo_busca}'")
                 resultado_final["mensagem_erro"] = f"Nenhum resultado encontrado para '{termo_busca}'."
-            
                 return resultado_final
-            # resultado_beneficios = self.driver.find_elements(By.XPATH, '//*[@id="resultados"]')[:10]
-            resultado_beneficios = self.driver.find_elements(By.ID, 'resultados')[:10]
+
+            # Aqui ele faz o clique no nome da pessoa
+            self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.link-busca-nome'))).click()
+            time.sleep(15)
+            imagem_tela(self.driver, "pag")
+            
+            # Aqui ele clica novamente no aceitar cookies na tela Pessoa Física
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="accept-all-btn"]'))).click()
+            imagem_tela(self.driver, "pag")
+            
+            icone = self.driver.find_element(By.CSS_SELECTOR, 'div.item i.fas')
+            time.sleep(2)
+            classe = icone.get_attribute("class")
+            if "fa-angle-down" in classe:
+                self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="accordion1"]/div[1]/button'))).click()
+                time.sleep(2)
+                imagem_tela(self.driver, "pag")
+            
+            todos_botoes = self.driver.find_elements(By.CSS_SELECTOR, '.br-button.secondary.mt-3')
+            resultado_beneficios = [eliminado for eliminado in todos_botoes if 'block' not in eliminado.get_attribute('class')][:10]
+            time.sleep(2)
             imagem_tela(self.driver, "pag")
 
-            # if not resultado_beneficios:
-            #     logger.warning(f"Nenhum resultado encontrado para '{termo_busca}'")
-            #     resultado_final["mensagem_erro"] = f"Nenhum resultado encontrado para '{termo_busca}'."
-            #     return resultado_final
-
-            # logger.info(f"Encontrados {len(qtde_resultado)} resultados")
-            logger.info(f"Encontrados {qtde_resultado} resultados")
+            logger.info(f"Encontrados {len(resultado_beneficios)} resultados")
             for idx, linha in enumerate(resultado_beneficios):
                 linha.click()
-                self.wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="resultados"]/div/div/div[1]/a')))
+                time.sleep(10)
+                imagem_tela(self.driver, "pag")
 
                 screenshot_b64 = self.driver.get_screenshot_as_base64()
                 beneficios = self._coletar_beneficios()
@@ -105,10 +124,6 @@ class PortalTransparenciaScraper:
                     "beneficios": beneficios,
                     "screenshot_base64": screenshot_b64
                 })
-
-                self.driver.back()
-                self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'tbody')))
-
             return resultado_final
 
         except TimeoutException:
@@ -123,54 +138,41 @@ class PortalTransparenciaScraper:
             self.close()
 
     def _coletar_beneficios(self):
-        beneficios = []
-        beneficio = []
         try:
-            # rows = self.driver.find_elements(By.XPATH, '//*[@id="accordion1"]/div[1]/button')
-            # self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="btnConsultarPF"]')))
-            # rows = self.driver.find_elements(By.ID, 'accordion-recebimentos-recursos')
-            
-            self.wait.until(EC.element_to_be_clickable((By.ID, 'accordion-recebimentos-recursos')))
+            # Pega o título do beneficiário
+            titulo = self.driver.find_element(By.CSS_SELECTOR, '.py-0.px-0.mx-0.mt-0.mb-2.mb-md-0.pb-0.text-left').text.strip()
+            time.sleep(2)
+
+            # Expande os detalhes do auxílio
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="accordion1"]/div[1]/button/span[1]'))).click()
+            time.sleep(2)
             imagem_tela(self.driver, "pag")
-            
-            rows = self.driver.find_elements(By.CSS_SELECTOR, '.br-button.secondary.mt-3')
-            # imagem_tela(self.driver, "pag")
-            
-            
-            for row in rows:
+
+            # Coleta os títulos das colunas
+            cabecalhos = [th.text.strip() for th in self.driver.find_elements(By.CSS_SELECTOR, 'thead tr th')]
+            time.sleep(2)
+
+            beneficio = []
+            linhas = self.driver.find_elements(By.CSS_SELECTOR, 'tbody tr')
+            time.sleep(2)
+
+            for linha in linhas:
                 try:
-                    btn = row.find_element(By.ID, 'btnDetalharAuxilioBrasil')
-                    btn.click()
-                    
-                    trs = self.driver.find_elements(By.CSS_SELECTOR, 'tbody tr td')
-                    i = 0
-                    a = 1
-                    b = 1
-                    
-                    for tr in trs:
-                        try:
-                            varios_tds = tr[i].find_elements(By.XPATH, '//*[@id="tabelaDetalheValoresSacados"]/tbody/tr[{b}]')
-                            for unidade_td in varios_tds:
-                                try:
-                                    td = unidade_td[b].find_element(By.XPATH, '//*[@id="tabelaDetalheValoresSacados"]/tbody/tr[{a}]/td[{b}]')
-                                    beneficio.append(td)
-                                    b =+ 1
-                                except Exception as e:
-                                    logger.warning(f"Erro coletando benefícios: {e}")
-                            beneficios = {'auxilioBrasil': [beneficio]}
-                            i =+ 1
-                            a =+ 1
-                        except Exception as e:
-                            logger.warning(f"Erro coletando benefícios: {e}")
-                    # //*[@id="btnDetalharBpc"]
-                    # //*[@id="btnDetalharBpc"]
-                    # self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.detalhe-beneficio')))
-                    # info = self.driver.find_element(By.CSS_SELECTOR, 'div.detalhe-beneficio').text
-                    # beneficios.append(info)
-                    # self.driver.back()
-                    # self.wait.until(EC.presence_of_element_located((By.XPATH, '//h1[contains(text(),"Panorama da relação")]')))
-                except NoSuchElementException:
-                    beneficios.append(row.text)
+                    colunas = linha.find_elements(By.TAG_NAME, 'td')
+                    time.sleep(2)
+                    dados = [td.text.strip() for td in colunas]
+                    time.sleep(2)
+
+                    if len(dados) == len(cabecalhos):
+                        beneficio.append(dict(zip(cabecalhos, dados)))
+                        time.sleep(2)
+                    else:
+                        logger.warning(f"[{titulo}] Qtd de colunas diferente dos títulos: {dados}")
+                except Exception as e:
+                    logger.warning(f"[{titulo}] Erro processando linha: {e}")
+
+            return {titulo: beneficio}
+
         except Exception as e:
-            logger.warning(f"Erro coletando benefícios: {e}")
-        return beneficios
+            logger.warning(f"Erro geral coletando benefícios: {e}")
+            return {}
