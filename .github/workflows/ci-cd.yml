@@ -61,10 +61,16 @@ jobs:
             -H "Content-Type: application/json" \
             -d '{"cpf":"12345678901"}'
 
+      - name: Listar arquivos da raiz
+        run: ls -R
+
+      - name: Listar arquivos dentro de backend
+        run: ls -R backend
+
       - name: Rodar testes com Pytest
-        run: |
-          cd backend && pytest tests/
-      
+        run: pytest backend/tests/
+
       - name: Rodar testes com cobertura
         run: |
-          cd backend && coverage run -m pytest && coverage report
+          coverage run -m pytest backend/tests/
+          coverage report
