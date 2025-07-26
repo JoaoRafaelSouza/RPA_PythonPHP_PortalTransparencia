@@ -18,8 +18,6 @@ jobs:
           MYSQL_DATABASE: rpa
           MYSQL_USER: admin
           MYSQL_PASSWORD: 123
-        ports:
-          - 3307:3306
         options: >-
           --health-cmd="mysqladmin ping"
           --health-interval=10s
