@@ -47,6 +47,7 @@ RPA_PortalTransparencia_Simples/
 │   │   │   └── scraper_portal.py
 │   │   │
 │   │   ├── tests/
+│   │   │   ├── __init__.py
 │   │   │   └── test_api.py
 │   │   │
 │   │   ├── utils/
