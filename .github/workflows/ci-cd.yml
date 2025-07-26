@@ -10,6 +10,9 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    env:
+      COMPOSE_FILE: infra/docker-compose.yml
+
     services:
       mysql:
         image: mysql:8.0
@@ -46,11 +49,10 @@ jobs:
           find frontend -name '*.php' -exec php -l {} \;
 
       - name: Rodar Docker Compose (V2 embutido no Docker)
-        run: |
-          docker compose -f infra/docker-compose.yml up -d --build
+        run: docker compose -f $COMPOSE_FILE up -d --build
 
       - name: Verificar containers
-        run: docker compose ps
+        run: docker compose -f $COMPOSE_FILE ps
 
       - name: Testar endpoint FastAPI
         run: |
