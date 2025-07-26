@@ -63,11 +63,8 @@ jobs:
 
       - name: Rodar testes com Pytest
         run: |
-          cd backend
-          pytest tests/
+          cd backend && pytest tests/
       
       - name: Rodar testes com cobertura
         run: |
-          cd backend
-          coverage run -m pytest
-          coverage report
+          cd backend && coverage run -m pytest && coverage report
