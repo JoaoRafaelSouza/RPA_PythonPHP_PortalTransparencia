@@ -68,9 +68,9 @@ jobs:
         run: ls -R backend
 
       - name: Rodar testes com Pytest
-        run: pytest backend/tests/
+        run: pytest backend/app/tests/
 
       - name: Rodar testes com cobertura
         run: |
-          coverage run -m pytest backend/tests/
+          coverage run -m pytest backend/app/tests/
           coverage report
